@@ -1,0 +1,1 @@
+web: gunicorn FilmNet.wsgi --log-file -
