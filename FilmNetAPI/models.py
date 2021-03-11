@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Column, Integer, String, Date, Time, Numeric, ForeignKey
+from sqlalchemy import create_engine, Column, Integer, String, Date, Time, Numeric, Boolean, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 import os
 
@@ -13,17 +13,32 @@ class User(Base):
     name = Column(String, nullable=False)
     age = Column(Integer, nullable=False)
     sex = Column(String, nullable=False)
-    test_id = Column(Integer, ForeignKey('tests.id', ondelete='CASCADE'))
-    watched_id = Column(Integer, ForeignKey('films.id', ondelete='CASCADE'))
-    recommended_id = Column(Integer, ForeignKey('films.id', ondelete='CASCADE'))
+
+
+class WatchedFilm(Base):
+    __tablename__ = 'watched_films'
+
+    id = Column(Integer, primary_key=True)
+    film_id = Column(Integer, ForeignKey('films.id', ondelete='CASCADE'))
+    user_id = Column(Integer, ForeignKey('users.id', ondelete='CASCADE'))
+    like = Column(Boolean)
+
+
+class RecommendedFilm(Base):
+    __tablename__ = 'recommended_films'
+
+    id = Column(Integer, primary_key=True)
+    film_id = Column(Integer, ForeignKey('films.id', ondelete='CASCADE'))
+    user_id = Column(Integer, ForeignKey('users.id', ondelete='CASCADE'))
 
 
 class Test(Base):
     __tablename__ = 'tests'
 
     id = Column(Integer, primary_key=True)
-    name = Column(String, nullable=False)
+    title = Column(String, nullable=False)
     result = Column(String, nullable=False)
+    user_id = Column(Integer, ForeignKey('users.id', ondelete='CASCADE'))
 
 
 class Film(Base):
