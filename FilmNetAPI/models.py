@@ -1,25 +1,8 @@
 from sqlalchemy import create_engine, Column, Integer, String, Date, Time, Numeric, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
-import environ
-from pathlib import Path
+from FilmNet import settings
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-env = environ.Env(
-    DEBUG=(bool, False)
-)
-environ.Env.read_env(env_file='{}/FilmNet/.env'.format(BASE_DIR))
-
-engine = create_engine(
-    'postgresql+psycopg2://{user}:{password}@{host}:{port}/{name}'.format(
-        user=env('DATABASE_USER'),
-        password=env('DATABASE_PASSWORD'),
-        host=env('DATABASE_HOST'),
-        port=env('DATABASE_PORT'),
-        name=env('DATABASE_NAME')
-    ),
-    echo=False
-)
+engine = create_engine(settings.DATABASES['default']['URL'], echo=False)
 Base = declarative_base()
 
 
