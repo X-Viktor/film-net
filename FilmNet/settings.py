@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import environ, os
+import dj_database_url
 
 env = environ.Env(
     DEBUG=(bool, False)
@@ -81,18 +82,9 @@ WSGI_APPLICATION = 'FilmNet.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': env('DATABASE_NAME'),
-        'USER': env('DATABASE_USER'),
-        'PASSWORD': env('DATABASE_PASSWORD'),
-        'HOST': env('DATABASE_HOST'),
-        'PORT': env('DATABASE_PORT'),
-        'URL': env('DATABASE_URL')
-    }
-}
+DATABASES = {}
 
+DATABASES['default'] = dj_database_url.config(default=env('DATABASE_URL'))
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators

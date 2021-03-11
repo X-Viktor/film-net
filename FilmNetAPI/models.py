@@ -1,8 +1,8 @@
 from sqlalchemy import create_engine, Column, Integer, String, Date, Time, Numeric, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
-from FilmNet import settings
+import os
 
-engine = create_engine(settings.DATABASES['default']['URL'], echo=False)
+engine = create_engine(os.environ['DATABASE_URL'], echo=False)
 Base = declarative_base()
 
 
